@@ -1,0 +1,38 @@
+{
+  "name": "tessel2-fadecandy",
+  "version": "1.0.1",
+  "description": "Library to control and send video frames to a FadeCandy from Tessel2 via USB",
+  "main": "dist/FadeCandy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "npm run build; node demo.js",
+    "build": "babel src --out-dir dist"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/necccc/tessel2-fadecandy.git"
+  },
+  "keywords": [
+    "tessel2",
+    "fadecandy",
+    "neopixels",
+    "usb"
+  ],
+  "dependencies": {
+    "usb": "^1.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0"
+  },
+  "author": "nec@shell8.net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/necccc/tessel2-fadecandy/issues"
+  },
+  "homepage": "https://github.com/necccc/tessel2-fadecandy#readme"
+}
