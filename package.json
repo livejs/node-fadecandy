@@ -1,6 +1,6 @@
 {
   "name": "tessel2-fadecandy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Library to control and send video frames to a FadeCandy from Tessel2 via USB",
   "main": "dist/FadeCandy.js",
   "scripts": {

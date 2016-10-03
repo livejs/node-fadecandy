@@ -1,9 +1,153 @@
 # tessel2-fadecandy
 
-Library to control and send video frames to a FadeCandy from Tessel2 via USB
+Node library to control and send video frames to a FadeCandy from Tessel2 or desktop via USB.
 
-This project is in a realy early state, see `demo.js` for usage.
+**It does not require the fcserver from FadeCandy**, this module communicates directly with the FadeCandy board via USB.
 
+
+## Requirements
+
+- A [Tessel 2 board](https://tessel.io/), with firmware at least **0.0.16** (from that version it supports the [node-usb lib](https://github.com/tessel/node-usb) correctly) 
+- A [FadeCandy controller](https://www.adafruit.com/product/1689), which is a NeoPixel driver that is connected via USB
+
+**Note:** this lib is also usable from the desktop with the FadeCandy controller
+
+This project is in a realy early state, see `demo.js` for usage [below](#Example). 
+
+
+## Documentation
+
+
+### class FadeCandy
+
+FadeCandy is an instance of EventEmitter
+
+```
+const FadeCandy = require('tessel2-fadecandy')
+
+const fc = new FadeCandy()
+```
+
+
+#### Events
+
+##### FadeCandy.events.READY
+
+The USB device is ready to use, you can set the color LUT or configure the controller
+
+##### FadeCandy.events.COLOR_LUT_READY
+
+Color look up table is set, ready to accept video frames
+
+
+
+#### Properties
+
+##### fc.config
+
+Instance of FadeCandy.Configuration. Set or get the configuration values using this object. Check out the FadeCandy.Configuration class for more information.
+
+
+##### fc.clut
+
+Instance of FadeCandy.ColorLUT. You can send in a custom Color Look Up Table, or use a default one. Check out the FadeCandy.ColorLUT class for more information.
+
+
+##### fc.usb
+
+Instance of FadeCandy.USBInterface. Device information and usb events are available through this object.
+
+
+#### Methods
+
+##### fc.send(data)
+
+* `data` {UInt8Array} typed array containing RGB values for every pixel
+
+Send video frame data. Every controlled pixel need 3 values of color channels: R,G,B. The bytearray in `data` contains these simply concatenated, like this:
+
+```
+// | 1st pixel  | 2nd pixel  | 3rd pixel
+[    255, 0, 0,   0, 255, 0,   0, 0, 255  .... ] 
+// first 3 pixels are a full red, a full green, and a full blue
+```
+
+
+
+
+All the following classes are available as static properties on the FaceCandy class, or the instantiated object.
+
+---
+
+### class FadeCandy.Configuration
+
+Configure the FadeCandy controller through this class. 
+
+Detailed information of the configuration packet [can be found here.](https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_usb.md#configuration-packet)
+
+
+#### Properties
+
+##### FadeCandy.Configuration.schema
+
+Contains the configuration schema that can be used
+
+
+Configuration key				| Default value
+-----------------				| -------------
+MODE 							| 0
+LED_STATUS 						| 0 
+LED_MODE 						| 0 
+DISABLE_KEYFRAME_INTERPOLATION | 0
+DISABLE_DITHERING 				| 0 
+
+
+#### Methods
+
+##### fc.config.set(key, value)
+##### fc.config.set(obj)
+
+ * `key` {String}
+ * `value` {Boolean}
+
+Set a configuration value, or set multiple values. To set multiple values, pass in an object with the keys from the schema and their values.
+
+##### fc.config.get(key)
+##### fc.config.get()
+
+ * `key` {String}
+
+Get a configuration value, or get the whole currently set configuration.
+
+---
+
+### FadeCandy.ColorLUT
+
+FadeCandy.ColorLUT is an instance of EventEmitter. This class sets and/or generates a default Color Look Up Table. As the [original FadeCandy docs](https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_usb.md#color-lut-packets) describe:
+
+> The lookup table is structured as three arrays of 257 entries, starting with the entire red-channel LUT, then the green-channel LUT, then the blue-channel LUT.
+
+FadeCandy uses 16-bit color LUT entries, so for a bytearray or UInt8Array, these will be split into high and low bytes. The FadeCandy.ColorLUT accepts these data in one UInt8Array containing (3 channels * 256 entries * 2) bytes.
+
+
+#### methods
+
+##### fc.clut.create([data]) 
+
+ * `data` {Uint8Array} optional bytearray containing a color LUT
+
+Set up a new Color LUT from the provided data. Data is optional, if not set, a default CLUT will be generated and used.
+
+##### fc.clut.generateDefault()
+
+Returns a Uint8Array, containing the default CLUT.
+
+---
+
+### FadeCandy.USBInterface
+extends EventEmitter
+
+---
 
 ## Example
 

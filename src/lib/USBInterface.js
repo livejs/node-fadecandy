@@ -11,7 +11,7 @@ const usb = require('usb')
 
 const EventEmitter = require('events');
 
-module.exports = class FadeCandyInterface extends EventEmitter {
+module.exports = class USBInterface extends EventEmitter {
 
     constructor () {
         super()
