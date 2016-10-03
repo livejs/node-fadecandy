@@ -35,18 +35,31 @@ const fc = new FadeCandy()
 
 The USB device is ready to use, you can set the color LUT or configure the controller
 
+```
+fc.on(FadeCandy.events.READY, function () {
+
+	// the USB device is ready!
+	
+})
+```
+
 ##### FadeCandy.events.COLOR_LUT_READY
 
 Color look up table is set, ready to accept video frames
 
+```
+fc.on(FadeCandy.events.COLOR_LUT_READY, function () {
 
+	// we have a CLUT, lets blink!
+	
+})
+```
 
 #### Properties
 
 ##### fc.config
 
 Instance of FadeCandy.Configuration. Set or get the configuration values using this object. Check out the FadeCandy.Configuration class for more information.
-
 
 ##### fc.clut
 
@@ -71,8 +84,6 @@ Send video frame data. Every controlled pixel need 3 values of color channels: R
 [    255, 0, 0,   0, 255, 0,   0, 0, 255  .... ] 
 // first 3 pixels are a full red, a full green, and a full blue
 ```
-
-
 
 
 All the following classes are available as static properties on the FaceCandy class, or the instantiated object.
@@ -112,12 +123,31 @@ DISABLE_DITHERING 				| 0
 
 Set a configuration value, or set multiple values. To set multiple values, pass in an object with the keys from the schema and their values.
 
+
+```
+// set a single value
+fc.config.set(FadeCandy.Configuration.schema.DISABLE_KEYFRAME_INTERPOLATION, 1)
+
+// set multiple values
+fc.config.set({
+	[FadeCandy.Configuration.schema.LED_MODE]: 1,
+	[FadeCandy.Configuration.schema.LED_STATUS]: 1
+})
+
+```
+
 ##### fc.config.get(key)
 ##### fc.config.get()
 
  * `key` {String}
 
 Get a configuration value, or get the whole currently set configuration.
+
+```
+// get the interpolation setting
+let i = fc.config.get(FadeCandy.Configuration.schema.DISABLE_KEYFRAME_INTERPOLATION)
+
+```
 
 ---
 
@@ -138,9 +168,32 @@ FadeCandy uses 16-bit color LUT entries, so for a bytearray or UInt8Array, these
 
 Set up a new Color LUT from the provided data. Data is optional, if not set, a default CLUT will be generated and used.
 
+
+```
+fc.on(FadeCandy.events.READY, function () {
+
+	// the USB device is ready!
+	
+	// set up the CLUT
+	fc.clut.create() 
+	
+})
+```
+
 ##### fc.clut.generateDefault()
 
 Returns a Uint8Array, containing the default CLUT.
+
+
+```
+	// check out the CLUT before even using the FadeCandy lib
+
+	let fclut = new FadeCandy.ColorLUT()
+
+	let defaultCLUT = fclut.generateDefault() // UInt8Array
+
+```
+
 
 ---
 
