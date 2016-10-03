@@ -1,5 +1,7 @@
 'use strict'
+
 const VideoFramePacket = require('./VideoFramePacket')
+
 /*
 
     In a type 0 packet, the USB packet contains up to 21 pixels of 24-bit RGB color data.
@@ -15,9 +17,9 @@ module.exports = class Pixels {
         this.__fci = fadeCandyInterface
     }
 
-    send (data) {
+    send (data, cb) {
         let packet = new VideoFramePacket()
-        this.__fci.send(packet.create(data))
+        this.__fci.send(packet.create(data), cb)
     }
 }
 

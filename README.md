@@ -45,7 +45,7 @@ fc.on(FadeCandy.events.READY, function (fc) {
 
 ##### FadeCandy.events.COLOR_LUT_READY
 
-Color look up table is set, ready to accept video frames
+Color look-up table is set, ready to accept video frames
 
 ```
 fc.on(FadeCandy.events.COLOR_LUT_READY, function (fc) {
@@ -63,7 +63,7 @@ Instance of [FadeCandy.Configuration](#fadecandyconfiguration). Set or get the c
 
 ##### fc.clut
 
-Instance of [FadeCandy.ColorLUT](#fadecandycolorlut). You can send in a custom Color Look Up Table, or use a default one. Check out the [FadeCandy.ColorLUT](#fadecandycolorlut) class for more information.
+Instance of [FadeCandy.ColorLUT](#fadecandycolorlut). You can send in a custom Color Look-Up Table, or use a default one. Check out the [FadeCandy.ColorLUT](#fadecandycolorlut) class for more information.
 
 
 ##### fc.usb
@@ -73,9 +73,10 @@ Instance of [FadeCandy.USBInterface](#fadecandyusbinterface). Device information
 
 #### Methods
 
-##### fc.send(data)
+##### fc.send(data [, callback])
 
 * `data` {UInt8Array} typed array containing RGB values for every pixel
+* `callback` {Function} optional callback, which is fired on successful data transfer
 
 Send video frame data. Every controlled pixel need 3 values of color channels: R,G,B. The bytearray in `data` contains these simply concatenated, like this:
 
@@ -84,6 +85,9 @@ Send video frame data. Every controlled pixel need 3 values of color channels: R
 [    255, 0, 0,   0, 255, 0,   0, 0, 255  .... ] 
 // first 3 pixels are a full red, a full green, and a full blue
 ```
+**Note:** This method works only after a CLUT has been set
+
+
 
 
 All the following classes are available as static properties on the FaceCandy class, or the instantiated object.
@@ -152,9 +156,9 @@ let i = fc.config.get(FadeCandy.Configuration.schema.DISABLE_KEYFRAME_INTERPOLAT
 
 ### FadeCandy.ColorLUT
 
-FadeCandy.ColorLUT is an instance of EventEmitter. This class sets and/or generates a default Color Look Up Table. As the [original FadeCandy docs](https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_usb.md#color-lut-packets) describe:
+FadeCandy.ColorLUT is an instance of EventEmitter. This class sets and/or generates a default Color Look-Up Table. As the [original FadeCandy docs](https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_usb.md#color-lut-packets) describe:
 
-> The lookup table is structured as three arrays of 257 entries, starting with the entire red-channel LUT, then the green-channel LUT, then the blue-channel LUT.
+> The look-up table is structured as three arrays of 257 entries, starting with the entire red-channel LUT, then the green-channel LUT, then the blue-channel LUT.
 
 FadeCandy uses 16-bit color LUT entries, so for a bytearray or UInt8Array, these will be split into high and low bytes. The FadeCandy.ColorLUT accepts these data in one UInt8Array containing (3 channels * 256 entries * 2) bytes.
 
@@ -187,7 +191,7 @@ fc.on(FadeCandy.events.READY, function (fc) {
 
 ##### fc.clut.generateDefault()
 
-Returns a Uint8Array, containing the default CLUT.
+Returns a Uint8Array, containing the default color look-up table. The code, that generates this default color LUT is based on [this simple example in Python for FadeCandy](https://github.com/scanlime/fadecandy/blob/master/examples/python/usb-lowlevel.py)
 
 
 ```
@@ -203,7 +207,17 @@ Returns a Uint8Array, containing the default CLUT.
 ---
 
 ### FadeCandy.USBInterface
-extends EventEmitter
+
+FadeCandy.USBInterface is an instance of EventEmitter. This class does the USB device discovery, opening the device, and claiming the interface. This process is supposed to be an underlying mechanism, so you don't have to meddle with USB connections.
+
+#### Events
+
+#### Properties
+
+#### Methods
+
+
+
 
 ---
 
@@ -227,7 +241,7 @@ fc.on(FadeCandy.events.READY, function () {
     // see the config schema
     console.log(fc.Configuration.schema)
 
-    // create default color look up table
+    // create default color look-up table
     fc.clut.create()
 
     // set fadecandy led to manual mode

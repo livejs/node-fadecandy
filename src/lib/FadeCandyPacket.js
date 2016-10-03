@@ -52,11 +52,8 @@ module.exports = class FadeCandyPacket {
     createPacketArray (data) {
         let packetArray = [];
         let iterateCount = Math.ceil(data.length / this.max_entries)
-        //console.log('createPacketArray')
-        //console.log('data.length', data.length)
-        for (let i = 0 ; i < iterateCount ; i++) {
 
-            //console.log('slice from', i * this.max_entries, 'until', i * this.max_entries + this.max_entries + 1)
+        for (let i = 0 ; i < iterateCount ; i++) {
             packetArray.push(data.slice(i * this.max_entries, i * this.max_entries + this.max_entries))
         }
 
@@ -73,7 +70,6 @@ module.exports = class FadeCandyPacket {
         let final = index + 1 === packetArray.length
 
         ctrlByte[0] |= this.type
-
         ctrlByte[0] |= index
 
         if (final) {

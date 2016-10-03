@@ -23,6 +23,7 @@
     "usb"
   ],
   "dependencies": {
+    "debug": "^2.2.0",
     "usb": "^1.2.0"
   },
   "devDependencies": {

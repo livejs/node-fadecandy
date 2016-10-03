@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('FadeCandy')
 const EventEmitter = require('events');
 const Configuration = require('./lib/Configuration')
 const ColorLUT = require('./lib/ColorLUT')
@@ -47,7 +48,7 @@ module.exports = class FadeCandy extends EventEmitter {
 
     __onInterfaceReady () {
 
-        //console.log('__onInterfaceReady')
+        debug('USB interface ready')
 
         this.pixel = new Pixels(this.usb)
         this.clut = new ColorLUT(this.usb)
@@ -57,10 +58,10 @@ module.exports = class FadeCandy extends EventEmitter {
         this.emit(events.READY, this)
     }
 
-    send (pixelData) {
-        if (this.clut.ready) return this.pixel.send(pixelData)
+    send (pixelData, cb) {
+        if (this.clut.ready) return this.pixel.send(pixelData, cb)
 
-        //console.log('clut not set')
+        debug('tried to send, but CLUT was not set')
     }
 
 }

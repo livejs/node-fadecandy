@@ -61,8 +61,6 @@ module.exports = class Configuration {
 
         Object.assign(this.__configuration, obj);
 
-        // TODO send to fadecandy
-
         this.__fci.send(this.__createPacket())
     }
 

@@ -1,4 +1,5 @@
 'use strict'
+
 const EventEmitter = require('events');
 const ClutPacket = require('./ClutPacket')
 
@@ -51,14 +52,10 @@ module.exports = class ColorLUT extends EventEmitter{
                 let value = Math.min(0xFFFF, Math.floor(Math.pow(row / 256, 2.2) * 0x10000))
                 let i = channel * 257 + row
 
-                //console.log('channel', channel, 'row', row, 'value', value, 'high', value & 0xFF, 'low', value >> 8)
-
                 lut[i*2] = value & 0xFF // entry high byte
                 lut[i*2 + 1] = value >> 8 // entry low byte
             }
         }
-
-        //console.log(lut)
 
         return lut
     }
@@ -67,5 +64,6 @@ module.exports = class ColorLUT extends EventEmitter{
         this.ready = true
         this.emit(events.READY)
     }
+
 }
 

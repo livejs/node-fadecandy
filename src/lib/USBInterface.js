@@ -1,10 +1,11 @@
 'use strict'
-
+const debug = require('debug')('USBInterface')
 const VENDOR_ID = 7504;
 const PRODUCT_ID = 24698;
 
 const events = {
-    READY: 'ready'
+    READY: 'ready',
+    DETACHED: 'fadecandy_detached'
 }
 
 const usb = require('usb')
@@ -16,7 +17,7 @@ module.exports = class USBInterface extends EventEmitter {
     constructor () {
         super()
 
-        usb.on('attach', (device) => this.__onDeviceAttach(device));
+        usb.on('attach', (device) => this.__onDeviceAttach(device)); // doesn't really work :(
         usb.on('detach', (device) => this.__onDeviceDetach(device));
 
         process.nextTick(()=>this.connect())
@@ -30,12 +31,17 @@ module.exports = class USBInterface extends EventEmitter {
         this.__getDevice()
     }
 
+    send (data, cb) {
+        this.endpoint.transfer(data, (err) => this.__onTransferComplete(err, cb))
+    }
+
     __onDeviceAttach (device) {
         if (
             device.deviceDescriptor.idVendor == VENDOR_ID &&
             device.deviceDescriptor.idProduct == PRODUCT_ID
         ) {
-           // console.log('__onDeviceAttach', 'device is ours')
+
+            debug('__onDeviceAttach: device is ours')
 
             this.device = device;
             this.__init()
@@ -43,7 +49,13 @@ module.exports = class USBInterface extends EventEmitter {
     }
 
     __onDeviceDetach(device) {
-        //console.log('__onDeviceDetach')
+        debug('__onDeviceDetach')
+        if (
+            device.deviceDescriptor.idVendor == VENDOR_ID &&
+            device.deviceDescriptor.idProduct == PRODUCT_ID
+        ) {
+            this.emit(events.DETACHED)
+        }
     }
 
     __onTransferComplete (err, cb) {
@@ -51,13 +63,13 @@ module.exports = class USBInterface extends EventEmitter {
 
         if (cb) cb()
 
-        //console.log('transfer complete')
+        debug('transfer complete')
     }
 
     __init () {
         this.endpoint = this.__getEndpoint()
 
-       // console.log('__init', 'has endpoint')
+        debug('has endpoint')
 
         this.emit(events.READY, this.endpoint)
     }
@@ -65,7 +77,7 @@ module.exports = class USBInterface extends EventEmitter {
     __getDevice () {
         this.device = usb.findByIds(VENDOR_ID, PRODUCT_ID)
 
-       // console.log('__getDevice', !!this.device)
+        debug('has device: ' + !this.device)
 
         if (this.device) this.__init()
     }
@@ -80,10 +92,6 @@ module.exports = class USBInterface extends EventEmitter {
         fci.claim()
 
         return fci.endpoint(1)
-    }
-
-    send (data, cb) {
-        this.endpoint.transfer(data, (err) => this.__onTransferComplete(err, cb))
     }
 
 }
