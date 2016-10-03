@@ -36,7 +36,7 @@ const fc = new FadeCandy()
 The USB device is ready to use, you can set the color LUT or configure the controller
 
 ```
-fc.on(FadeCandy.events.READY, function () {
+fc.on(FadeCandy.events.READY, function (fc) {
 
 	// the USB device is ready!
 	
@@ -48,7 +48,7 @@ fc.on(FadeCandy.events.READY, function () {
 Color look up table is set, ready to accept video frames
 
 ```
-fc.on(FadeCandy.events.COLOR_LUT_READY, function () {
+fc.on(FadeCandy.events.COLOR_LUT_READY, function (fc) {
 
 	// we have a CLUT, lets blink!
 	
@@ -160,7 +160,13 @@ FadeCandy.ColorLUT is an instance of EventEmitter. This class sets and/or genera
 FadeCandy uses 16-bit color LUT entries, so for a bytearray or UInt8Array, these will be split into high and low bytes. The FadeCandy.ColorLUT accepts these data in one UInt8Array containing (3 channels * 256 entries * 2) bytes.
 
 
-#### methods
+#### Events
+
+##### FadeCandy.ColorLUT.events.READY
+
+Fired when the last color LUT data packet was sent succesfully.
+
+#### Methods
 
 ##### fc.clut.create([data]) 
 
@@ -170,7 +176,7 @@ Set up a new Color LUT from the provided data. Data is optional, if not set, a d
 
 
 ```
-fc.on(FadeCandy.events.READY, function () {
+fc.on(FadeCandy.events.READY, function (fc) {
 
 	// the USB device is ready!
 	

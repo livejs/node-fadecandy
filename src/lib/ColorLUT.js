@@ -34,7 +34,9 @@ module.exports = class ColorLUT extends EventEmitter{
         if (!data) data = this.generateDefault()
 
         let packet = new ClutPacket()
-        this.__fci.send(packet.create(data), ()=>this.__onCLUTtransfer())
+
+        if (this.__fci)
+            this.__fci.send(packet.create(data), ()=>this.__onCLUTtransfer())
     }
 
     generateDefault () {
