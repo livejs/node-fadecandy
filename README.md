@@ -59,16 +59,16 @@ fc.on(FadeCandy.events.COLOR_LUT_READY, function (fc) {
 
 ##### fc.config
 
-Instance of FadeCandy.Configuration. Set or get the configuration values using this object. Check out the FadeCandy.Configuration class for more information.
+Instance of [FadeCandy.Configuration](#fadecandyconfiguration). Set or get the configuration values using this object. See the [FadeCandy.Configuration](#fadecandyconfiguration) class for more information.
 
 ##### fc.clut
 
-Instance of FadeCandy.ColorLUT. You can send in a custom Color Look Up Table, or use a default one. Check out the FadeCandy.ColorLUT class for more information.
+Instance of [FadeCandy.ColorLUT](#fadecandycolorlut). You can send in a custom Color Look Up Table, or use a default one. Check out the [FadeCandy.ColorLUT](#fadecandycolorlut) class for more information.
 
 
 ##### fc.usb
 
-Instance of FadeCandy.USBInterface. Device information and usb events are available through this object.
+Instance of [FadeCandy.USBInterface](#fadecandyusbinterface). Device information and usb events are available through this object.
 
 
 #### Methods
@@ -90,7 +90,7 @@ All the following classes are available as static properties on the FaceCandy cl
 
 ---
 
-### class FadeCandy.Configuration
+### FadeCandy.Configuration
 
 Configure the FadeCandy controller through this class. 
 
@@ -136,8 +136,7 @@ fc.config.set({
 
 ```
 
-##### fc.config.get(key)
-##### fc.config.get()
+##### fc.config.get([key])
 
  * `key` {String}
 
