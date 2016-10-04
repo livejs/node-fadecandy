@@ -208,15 +208,43 @@ Returns a Uint8Array, containing the default color look-up table. The code, that
 
 ### FadeCandy.USBInterface
 
-FadeCandy.USBInterface is an instance of EventEmitter. This class does the USB device discovery, opening the device, and claiming the interface. This process is supposed to be an underlying mechanism, so you don't have to meddle with USB connections.
+FadeCandy.USBInterface is an instance of EventEmitter. This class does the USB device discovery, opening the device, and claiming the interface. 
+
+This process is supposed to be an underlying mechanism, so you don't have to meddle with USB connections.
 
 #### Events
 
+##### FadeCandy.USBInterface.READY
+
+Emitted when the USB device is opened, and the interface is claimed, so basically it's ready to transfer data.
+
+##### FadeCandy.USBInterface.DETACHED
+
+Emitted if the FadeCancy device is detached from the host.
+
+##### FadeCandy.USBInterface.TRANSFERERROR
+
+Emitted, when a packet transfer results in error.
+
 #### Properties
+
+##### fc.usb.device
+
+The USB device seen through the `node-usb` module. For example, you can find the deviceDescriptor and configDescriptor data here if needed.
+
+##### fc.usb.endpoint
+
+The OUT endpoint on which we communicate with the FadeCandy device.
 
 #### Methods
 
+##### fc.usb.connect()
 
+Tries to connect to a FadeCandy device by it's vendor and product id.
+
+##### fc.usb.send(data [,callback])
+
+Sends data through the endpoint, handles callback, or emits TRANSFERERROR
 
 
 ---

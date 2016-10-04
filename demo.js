@@ -45,5 +45,5 @@ fc.on(FadeCandy.events.COLOR_LUT_READY, function () {
         fc.send(data)
         frame++
 
-    }, 100)
+    }, 20)
 })

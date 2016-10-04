@@ -59,7 +59,11 @@ module.exports = class USBInterface extends EventEmitter {
     }
 
     __onTransferComplete (err, cb) {
-        if (err) console.log('endpoint transfer error', err)
+        if (err) {
+            console.log('endpoint transfer error', err)
+            this.emit(events.TRANSFERERROR, err)
+            return
+        }
 
         if (cb) cb()
 
