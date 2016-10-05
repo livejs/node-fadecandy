@@ -4,6 +4,13 @@ Node library to control and send video frames to a FadeCandy from Tessel2 or des
 
 **It does not require the fcserver from FadeCandy**, this module communicates directly with the FadeCandy board via USB.
 
+I suggest to go and check out what FadeCandy can do for your project.
+
+TL;DR: it's a LED driver control board, having 8 output ports (GND and Signal). Each port can address 64 pixels, so a single FadeCandy board can drive 512 LEDs. To handle more, you'll need more FadeCandy boards, and [this issue to be resolved](https://github.com/necccc/tessel2-fadecandy/issues/1), since in the current state of this lib only supports a single FadeCandy device.
+
+So 64 leds per port, you have to wire your leds according these ports, but not to worry about addressing them, because the FadeCandy device automatically splits the incoming data according to these ports. For example if you have 64 leds on the first, and 50 on the second one, you can send in a data for 114 pixels, and the FadeCandy will sort it out.
+
+You have to provide the 5V power source for the neopixels, or, if you're like me, and use a few leds (in my case: 114), you can power the led strips directly from the FadeCandy hackerport's 3.3V output.
 
 ## Requirements
 
@@ -16,7 +23,6 @@ This project is in a realy early state, see `demo.js` for usage [below](#Example
 
 
 ## Documentation
-
 
 ### class FadeCandy
 
