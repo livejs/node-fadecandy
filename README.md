@@ -21,6 +21,12 @@ You have to provide the 5V power source for the neopixels, or, if you're like me
 
 This project is in a realy early state, see `demo.js` for usage [below](#Example). 
 
+## Installation
+
+```
+$ npm i node-fadecandy --save
+```
+
 
 ## Documentation
 
@@ -29,7 +35,7 @@ This project is in a realy early state, see `demo.js` for usage [below](#Example
 FadeCandy is an instance of EventEmitter
 
 ```
-const FadeCandy = require('tessel2-fadecandy')
+const FadeCandy = require('node-fadecandy')
 
 const fc = new FadeCandy()
 ```
