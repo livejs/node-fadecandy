@@ -1,6 +1,6 @@
-# tessel2-fadecandy
+# node-fadecandy
 
-Node library to control and send video frames to a FadeCandy from Tessel2 or desktop via USB.
+Node library to control and send video frames directly to a FadeCandy device from NodeJS, via USB.
 
 **It does not require the fcserver from FadeCandy**, this module communicates directly with the FadeCandy board via USB.
 
@@ -14,7 +14,7 @@ You have to provide the 5V power source for the neopixels, or, if you're like me
 
 ## Requirements
 
-- A [Tessel 2 board](https://tessel.io/), with firmware at least **0.0.16** (from that version it supports the [node-usb lib](https://github.com/tessel/node-usb) correctly) 
+- If you wish to use this on a [Tessel 2 board](https://tessel.io/), update to it's firmware at least **0.0.16** (from that version it supports the [node-usb lib](https://github.com/tessel/node-usb) correctly) 
 - A [FadeCandy controller](https://www.adafruit.com/product/1689), which is a NeoPixel driver that is connected via USB
 
 **Note:** this lib is also usable from the desktop with the FadeCandy controller
