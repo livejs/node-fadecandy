@@ -29,18 +29,19 @@ fc.on(FadeCandy.events.COLOR_LUT_READY, function () {
     console.log('FaceCandy says color lut ready')
 
     let frame = 0
+    let pixels = 120
     setInterval(function () {
 
-        let data = new Uint8Array(6 * 3)
+        let data = new Uint8Array(pixels * 3)
 
-        for (let pixel = 0; pixel < 6; pixel ++) {
-            if (frame % 6 == pixel) {
+        for (let pixel = 0; pixel < pixels; pixel ++) {
+            //if (frame % pixels == pixel) {
                 let i = 3 * pixel
 
                 data[i] = 255
                 data[i + 1] = 0
                 data[i + 2] = 255
-            }
+            //}
         }
         fc.send(data)
         frame++

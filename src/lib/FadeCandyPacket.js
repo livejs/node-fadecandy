@@ -1,11 +1,5 @@
 'use strict'
 
-const types = {
-    VIDEO_FRAME: 0b00000000,
-    CLUT: 0b01000000,
-    CONFIGURATION: 0b10000000
-}
-
 const MAX_SIZE = 64
 
 /*
@@ -32,13 +26,11 @@ entries     // 63 for pixels (r + g + b)
 
 module.exports = class FadeCandyPacket {
 
-    constructor () {}
-
-    static get types () {
-        return types
+    constructor () {
+        this.MAX_SIZE = MAX_SIZE
     }
 
-    static get max_size () {
+    static get MAX_SIZE () {
         return MAX_SIZE
     }
 

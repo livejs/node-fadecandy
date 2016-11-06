@@ -19,11 +19,11 @@ const defaults = {
 }
 
 const bitmask = {
-    [schema.MODE]: 0b00010000,
-    [schema.LED_STATUS]: 0b00001000,
-    [schema.LED_MODE]: 0b00000100,
-    [schema.DISABLE_KEYFRAME_INTERPOLATION]: 0b00000010,
-    [schema.DISABLE_DITHERING]: 0b00000001
+    [schema.MODE]: 0b00010000, // 16
+    [schema.LED_STATUS]: 0b00001000, // 8
+    [schema.LED_MODE]: 0b00000100, // 4
+    [schema.DISABLE_KEYFRAME_INTERPOLATION]: 0b00000010, // 2
+    [schema.DISABLE_DITHERING]: 0b00000001 // 1
 }
 
 module.exports = class Configuration {

@@ -13,10 +13,11 @@ const FadeCandyPacket = require('./FadeCandyPacket')
 
 
 module.exports = class VideoFramePacket extends FadeCandyPacket {
+
     constructor (data) {
         super()
 
-        this.type = FadeCandyPacket.types.VIDEO_FRAME
+        this.type = 0b00000000 // 0
         this.max_entries = 63
 
         if (data) return this.create(data)

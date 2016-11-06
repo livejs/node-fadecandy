@@ -14,10 +14,11 @@ const FadeCandyPacket = require('./FadeCandyPacket')
 
 
 module.exports = class ClutPacket extends FadeCandyPacket {
+
     constructor (data) {
         super()
 
-        this.type = FadeCandyPacket.types.CLUT
+        this.type = 0b01000000 // 64
         this.max_entries = 62
 
         if (data) return this.create(data)
