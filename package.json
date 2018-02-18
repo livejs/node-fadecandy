@@ -1,6 +1,6 @@
 {
   "name": "node-fadecandy",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Library to control and send video frames directly to a FadeCandy device from NodeJS via USB",
   "main": "dist/FadeCandy.js",
   "scripts": {
